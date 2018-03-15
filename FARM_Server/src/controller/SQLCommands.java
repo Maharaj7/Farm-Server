@@ -111,7 +111,14 @@ public class SQLCommands {
 	    catch(SQLException e){
 	    	e.printStackTrace();
 	    }
-		 
+		 finally{
+			 try{
+				 connection.close();
+			 }catch(Exception a)
+			 {
+				 a.printStackTrace();
+			 }
+		 }
 		 return false;
 	 }
 	 
@@ -165,7 +172,7 @@ public class SQLCommands {
      
 		 catch(SQLException e)
 		 {
-			 JOptionPane.showMessageDialog(null,e);
+			 e.printStackTrace();
 		 }
 		 return false;
 	 }
@@ -188,7 +195,7 @@ public class SQLCommands {
 		 }
 		 catch(SQLException e)
 		 {
-			 JOptionPane.showMessageDialog(null,e);
+			 e.printStackTrace();
 		 }
 		 return null;
 	 }
@@ -212,7 +219,7 @@ public class SQLCommands {
 		 }
 		 catch(SQLException e)
 		 {
-			 JOptionPane.showMessageDialog(null,e);
+			 e.printStackTrace();
 		 }
 		 return null;
 	 }
@@ -234,7 +241,7 @@ public class SQLCommands {
 			 
 		 }catch(SQLException e)
 		 {
-			 JOptionPane.showMessageDialog(null,e);
+                  e.printStackTrace();
 		 }
 		 return crops;
 	 
