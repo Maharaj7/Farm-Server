@@ -19,6 +19,8 @@ public class SQLCommands {
 		 connection = SqlConnection.dbConnector();
 	 }
 	 
+	 
+	 //adds
 	 public boolean addCustomer(Customer customer)
 	 {
 		String query  = "insert into customer (fName,lName,email,password,image) values (?,?,?,?,?)";
