@@ -18,7 +18,7 @@ public class ServerThread extends Thread{
 	private ObjectInputStream is;
 	boolean success;
 	static String email;
-	
+	static String cropName;
 	public ServerThread(Socket socket)
 	{
 		this.socket = socket;
@@ -100,7 +100,10 @@ public void waitForRequest() {
 					}
 					else if(action.equals("Update Crop"))
 					{
-						
+						os.writeObject(true);
+						 cropName = (String)is.readObject();
+						Crop crop = (Crop)is.readObject();
+						sql.updateCrops(crop, cropName);
 						
 					}
 					

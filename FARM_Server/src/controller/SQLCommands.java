@@ -74,10 +74,10 @@ public class SQLCommands {
 		 return false;
 	 }
 	 
-	 public boolean updateCrops(Crop crop,String email)
+	 public boolean updateCrops(Crop crop,String cropName)
 	 {
 		 try{
-		 String query = "Update crop set email = '"+crop.getEmail()+"', image = '"+crop.getImage()+"', name = '"+crop.getName()+"', weight = '"+crop.getWeight()+"', cost = '"+crop.getCostPerUnit()+"', available = '"+crop.getAvailable()+"', quantity = '"+crop.getQuantity()+"' where email = '"+email+"'";
+		 String query = "Update crop set image = '"+crop.getImage()+"', name = '"+crop.getName()+"', weight = '"+crop.getWeight()+"', cost = '"+crop.getCostPerUnit()+"', available = '"+crop.getAvailable()+"', quantity = '"+crop.getQuantity()+"' where name = '"+cropName+"'";
 		 PreparedStatement pst = connection.prepareStatement(query);
 			pst.execute();
 			

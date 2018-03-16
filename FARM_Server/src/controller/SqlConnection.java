@@ -11,10 +11,10 @@ public class SqlConnection {
 	{
 		try
 		{
-			//Class.forName("com.mysql.jdbc.Driver");
-			Class.forName("org.sqlite.JDBC");
-			//Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/farmers market","root","");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:farmers market.sqlite");
+			Class.forName("com.mysql.jdbc.Driver");
+			//Class.forName("org.sqlite.JDBC");//for SQLite
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/farmers market","root","");
+			//Connection conn = DriverManager.getConnection("jdbc:sqlite:farmers market.sqlite");//for SQLite
 
 			//logging for server connection
 			//JOptionPane.showMessageDialog(null, "Connection Successful");
