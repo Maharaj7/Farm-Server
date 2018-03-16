@@ -23,7 +23,7 @@ public class SQLCommands {
 	 //adds
 	 public boolean addCustomer(Customer customer)
 	 {
-		String query  = "insert into customer (fName,lName,email,password,image) values (?,?,?,?,?)";
+		String query  = "insert into customer (fName,lName,email,password,image,fund) values (?,?,?,?,?,?)";
 		String query2 = "insert into login (email,password) values (?,?)";
 	    try{
 		PreparedStatement pst = connection.prepareStatement(query);
@@ -33,6 +33,8 @@ public class SQLCommands {
 		pst.setString(3, customer.getEmail());
 		pst.setString(4, customer.getPassword());
 		pst.setBytes(5, customer.getPhoto());
+		pst.setFloat(6, customer.getFunds());
+		
 		pst.execute();
 		pst2.setString(1, customer.getEmail());
 		pst2.setString(2, customer.getPassword());
@@ -49,7 +51,7 @@ public class SQLCommands {
 	 
 	 public boolean addFarmer(Farmer farmer)
 	 {
-		String query  = "insert into farmer (fName,lName,email,address,password,image) values (?,?,?,?,?,?)";
+		String query  = "insert into farmer (fName,lName,email,address,password,image,earning) values (?,?,?,?,?,?,?)";
 		String query2 = "insert into farmerlogin (email,password) values (?,?)";
 	    try{
 		PreparedStatement pst = connection.prepareStatement(query);
@@ -60,6 +62,7 @@ public class SQLCommands {
 		pst.setString(4, farmer.getAddress());
 		pst.setString(5, farmer.getPassword());
 		pst.setBytes(6, farmer.getPhoto());
+		pst.setFloat(7, farmer.getEarnings());
 		pst.execute();
 		pst2.setString(1, farmer.getEmail());
 		pst2.setString(2, farmer.getPassword());
@@ -80,8 +83,6 @@ public class SQLCommands {
 		 String query = "Update crop set image = '"+crop.getImage()+"', name = '"+crop.getName()+"', weight = '"+crop.getWeight()+"', cost = '"+crop.getCostPerUnit()+"', available = '"+crop.getAvailable()+"', quantity = '"+crop.getQuantity()+"' where name = '"+cropName+"'";
 		 PreparedStatement pst = connection.prepareStatement(query);
 			pst.execute();
-			
-			JOptionPane.showMessageDialog(null, "Crop Updated");
 			pst.close();
 			return true;
 			}
@@ -161,7 +162,6 @@ public class SQLCommands {
 				ResultSet rs = pst.executeQuery();
 				if(rs.next())
 				{
-					
 					return true;
 				}
 				else{
@@ -189,6 +189,7 @@ public class SQLCommands {
 			 fam.setlName(rs.getString("lName"));
 			 fam.setEmail(rs.getString("email"));
 			 fam.setPhoto(img);
+			 fam.setFunds(rs.getFloat("fund"));
 		 }
 		  return fam;
 		 
@@ -213,6 +214,7 @@ public class SQLCommands {
 			 fam.setEmail(rs.getString("email"));
 			 fam.setAddress(rs.getString("address"));
 			 fam.setPhoto(img); 
+			 fam.setEarnings(rs.getFloat("earning"));
 		 }
 		  return fam;
 		 
