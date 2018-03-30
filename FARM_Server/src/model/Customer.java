@@ -7,7 +7,7 @@ public class Customer implements java.io.Serializable{
 	private String fName;
 	private String lName;
 	private String email;
-	private byte[] photo;
+	private String photoPath;
 	private String password;
 	private float funds;
 	
@@ -17,15 +17,18 @@ public class Customer implements java.io.Serializable{
 	 }
 	
 	
-	public Customer(String fName, String lName, String email, byte[] photo, String password, float funds) {
+	
+
+	public Customer(String fName, String lName, String email, String photoPath, String password, float funds) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
 		this.email = email;
-		this.photo = photo;
+		this.photoPath = photoPath;
 		this.password = password;
 		this.funds = funds;
 	}
+
 
 
 
@@ -45,9 +48,11 @@ public class Customer implements java.io.Serializable{
 
 
 
+
 	public void setfName(String fName) {
 		this.fName = fName;
 	}
+
 
 
 
@@ -57,9 +62,11 @@ public class Customer implements java.io.Serializable{
 
 
 
+
 	public void setlName(String lName) {
 		this.lName = lName;
 	}
+
 
 
 
@@ -69,21 +76,25 @@ public class Customer implements java.io.Serializable{
 
 
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
 
 
-	public byte[] getPhoto() {
-		return photo;
+
+	public String getphotoPath() {
+		return photoPath;
 	}
 
 
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+
+	public void setphotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
+
 
 
 
@@ -93,9 +104,11 @@ public class Customer implements java.io.Serializable{
 
 
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 
 
@@ -105,17 +118,10 @@ public class Customer implements java.io.Serializable{
 
 
 
+
 	public void setFunds(float funds) {
 		this.funds = funds;
 	}
 
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
-	
 	
 }

@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Arrays;
 
 public class Farmer implements java.io.Serializable {
 	
@@ -11,7 +10,7 @@ public class Farmer implements java.io.Serializable {
 	private String email;
 	private String address;
 	private String password;
-	private byte[] photo;
+	private String photoPath;
 	private float earnings;
 	
 	public Farmer()
@@ -20,8 +19,9 @@ public class Farmer implements java.io.Serializable {
 	}
 	
 	
-	
-	public Farmer(String fName, String lName, String email, String address, String password, byte[] photo,
+     
+
+	public Farmer( String fName, String lName, String email, String address, String password, String photoPath,
 			float earnings) {
 		super();
 		this.fName = fName;
@@ -29,7 +29,7 @@ public class Farmer implements java.io.Serializable {
 		this.email = email;
 		this.address = address;
 		this.password = password;
-		this.photo = photo;
+		this.photoPath = photoPath;
 		this.earnings = earnings;
 	}
 
@@ -43,10 +43,10 @@ public class Farmer implements java.io.Serializable {
 	}
 
 
-
 	public String getfName() {
 		return fName;
 	}
+
 
 
 
@@ -56,9 +56,11 @@ public class Farmer implements java.io.Serializable {
 
 
 
+
 	public String getlName() {
 		return lName;
 	}
+
 
 
 
@@ -68,9 +70,11 @@ public class Farmer implements java.io.Serializable {
 
 
 
+
 	public String getEmail() {
 		return email;
 	}
+
 
 
 
@@ -80,9 +84,11 @@ public class Farmer implements java.io.Serializable {
 
 
 
+
 	public String getAddress() {
 		return address;
 	}
+
 
 
 
@@ -92,9 +98,11 @@ public class Farmer implements java.io.Serializable {
 
 
 
+
 	public String getPassword() {
 		return password;
 	}
+
 
 
 
@@ -104,15 +112,18 @@ public class Farmer implements java.io.Serializable {
 
 
 
-	public byte[] getPhoto() {
-		return photo;
+
+	public String getphotoPath() {
+		return photoPath;
 	}
 
 
 
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
+
+	public void setphotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
+
 
 
 
@@ -122,15 +133,14 @@ public class Farmer implements java.io.Serializable {
 
 
 
+
 	public void setEarnings(float earnings) {
 		this.earnings = earnings;
 	}
 
+    
 
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}	
+	
 	
 
 }

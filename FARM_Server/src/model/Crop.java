@@ -1,7 +1,8 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Arrays;
+
+
 
 public class Crop implements Serializable{
 	/**
@@ -9,13 +10,14 @@ public class Crop implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String email;
-    private byte[] image;
+    private String imagePath;
     private String name;
     private float weight;
     private float costPerUnit;
     private String available;
     private int quantity;
     
+  
     public Crop()
     {
     	
@@ -25,17 +27,19 @@ public class Crop implements Serializable{
     {
     	this.email = email;
     }
-	public Crop(String email, byte[] image, String name, float weight, float costPerUnit, String available,
+
+	public Crop(String email, String imagePath, String name, float weight, float costPerUnit, String available,
 			int quantity) {
 		super();
 		this.email = email;
-		this.image = image;
+		this.imagePath = imagePath;
 		this.name = name;
 		this.weight = weight;
 		this.costPerUnit = costPerUnit;
 		this.available = available;
 		this.quantity = quantity;
 	}
+
 
 	public String getEmail() {
 		return email;
@@ -45,12 +49,12 @@ public class Crop implements Serializable{
 		this.email = email;
 	}
 
-	public byte[] getImage() {
-		return image;
+	public String getimagePath() {
+		return imagePath;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setimagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getName() {
@@ -92,18 +96,7 @@ public class Crop implements Serializable{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	@Override
-	public String toString() {
-		return "Crop [email=" + email + ", image=" + Arrays.toString(image) + ", name=" + name + ", weight=" + weight
-				+ ", costPerUnit=" + costPerUnit + ", available=" + available + ", quantity=" + quantity + "]";
-	}
-
-	
+    
     
     
 }

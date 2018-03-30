@@ -1,12 +1,18 @@
 package networking;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
 import controller.SQLCommands;
+import model.Basket;
 import model.Crop;
 import model.Customer;
 import model.Farmer;
@@ -17,7 +23,6 @@ public class ServerThread extends Thread{
 	private ObjectOutputStream os;
 	private ObjectInputStream is;
 	boolean success;
-	static String email;
 	static String cropName;
 	public ServerThread(Socket socket)
 	{
@@ -54,20 +59,26 @@ public void waitForRequest() {
 						  
 						sql.addFarmer(fam);
 					}
-					else if(action.equals("Request Login"))
+					else if(action.equals("Add to Basket"))
 					{
 						os.writeObject(true);
-						
-						Customer cus = (Customer)is.readObject();
-						sql.retrieveLogin(cus);
-					    Customer cus2 = new Customer();
+						Basket bas = (Basket)is.readObject();
+						sql.addToBasket(bas);
+					}
+					
+					else if(action.equals("Request Login"))
+					{
+						  Customer cus = (Customer)is.readObject();
+					      os.writeObject(sql.retrieveLogin(cus));
+					      Customer cus2 = new Customer();
 							cus2 = sql.retrieveCustomerData(cus);
 							os.writeObject(cus2);
+			                
 					}
 					else if(action.equals("request crops"))
 					{
 						os.writeObject(true);	
-						email = (String)is.readObject();
+						String email = (String)is.readObject();
 						
 						@SuppressWarnings("unchecked")
 						ArrayList<Crop> crr = (ArrayList<Crop>)is.readObject();
@@ -77,13 +88,47 @@ public void waitForRequest() {
 						os.writeObject(cr);
 						
 					}
-					else if(action.equals("farmer"))
+					else if(action.equals("request customer basket"))
 					{
 						
-						os.writeObject(true);
+						@SuppressWarnings("unchecked")
+						ArrayList<Basket> crr = (ArrayList<Basket>)is.readObject();
 						
+						ArrayList<Basket> cr = new ArrayList<Basket>();
+						cr = sql.retrieveBasketData(crr);
+						os.writeObject(cr);
+						
+					}
+					else if(action.equals("request customerPurchaseList"))
+					{
+						os.writeObject(true);	
+						String email = (String)is.readObject();
+						
+						@SuppressWarnings("unchecked")
+						ArrayList<Basket> crr = (ArrayList<Basket>)is.readObject();
+						
+						ArrayList<Basket> cr = new ArrayList<Basket>();
+						cr = sql.retrievePurchaseList(crr, email);
+						os.writeObject(cr);
+						
+					}
+					
+					else if(action.equals("request all crops"))
+					{
+						os.writeObject(true);	
+						
+						@SuppressWarnings("unchecked")
+						ArrayList<Crop> crr = (ArrayList<Crop>)is.readObject();
+						
+						ArrayList<Crop> cr = new ArrayList<Crop>();
+						cr = sql.retrieveAllCropData(crr);
+						os.writeObject(cr);
+						
+					}
+					else if(action.equals("farmer"))
+					{	
 					      Farmer fam = (Farmer)is.readObject();
-						 sql.retrieveFarmerLogin(fam);
+					      os.writeObject(sql.retrieveFarmerLogin(fam));
 					  
 					     Farmer fam2 = new Farmer();
 						fam2 = sql.retrieveFarmerData(fam);
@@ -98,15 +143,59 @@ public void waitForRequest() {
 						sql.addCrop(crop);
 						
 					}
-					else if(action.equals("Update Crop"))
+					else if(action.equals("Add CustomerPurchase"))
 					{
 						os.writeObject(true);
-						 cropName = (String)is.readObject();
+						Basket basket = (Basket)is.readObject();
+						sql.addCustomerPurchase(basket);
+					}
+					else if(action.equals("Update Crop"))
+					{
+						 String email;
+						 os.writeObject(true);
+						 String cropName = (String)is.readObject();
+						 email = (String)is.readObject();
 						Crop crop = (Crop)is.readObject();
-						sql.updateCrops(crop, cropName);
+						sql.updateCrops(crop, cropName,email);
+					}
+					else if(action.equals("Update Quantity"))
+					{
+						os.writeObject(true);
+						String cropName = (String)is.readObject();
+						Basket bas = (Basket)is.readObject();
+						sql.updateBasket(bas, cropName);
+					}
+					else if(action.equals("Update Customer"))
+					{
+						os.writeObject(true);
+						String email = (String)is.readObject();
+						Customer cus = (Customer)is.readObject();
+						sql.updateCustomer(cus, email);
+					}
+					else if(action.equals("Remove Basket Data"))
+					{
+						os.writeObject(true);
+						String email = (String)is.readObject();
+						sql.removeBasketData(email);
+					}
+					else if(action.equals("Remove basket item"))
+					{
+						os.writeObject(true);
+						String name = (String)is.readObject();
+						sql.removeBasketItem(name);
+					}
+					else if(action.equals("request farmer list"))
+					{
+						os.writeObject(true);	
+						
+						@SuppressWarnings("unchecked")
+						ArrayList<Farmer> crr = (ArrayList<Farmer>)is.readObject();
+						
+						ArrayList<Farmer> cr = new ArrayList<Farmer>();
+						cr = sql.retrieveFarmers(crr);
+						os.writeObject(cr);
 						
 					}
-					
 				}
 					
 				catch(ClassNotFoundException | ClassCastException e)
@@ -147,6 +236,24 @@ public void waitForRequest() {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public String convert_ImageByteArray_ToPathLocation(byte[] image)
+	{
+		try {
+            final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(image));
+            ImageIO.write(bufferedImage, "jpg", new File("path/to/image.jpg"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		return null;
+	}
+	
+	public void storeToImages(String pathName)
+	{
+		
 	}
 	
 }
