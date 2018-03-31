@@ -88,6 +88,17 @@ public void waitForRequest() {
 						os.writeObject(cr);
 						
 					}
+					else if(action.equals("request specific customer basket"))
+					{
+						String email = (String)is.readObject();
+						@SuppressWarnings("unchecked")
+						ArrayList<Basket> crr = (ArrayList<Basket>)is.readObject();
+						
+						ArrayList<Basket> cr = new ArrayList<Basket>();
+						cr = sql.retrieveCustomerBasketData(crr, email);
+						os.writeObject(cr); 
+						
+					}
 					else if(action.equals("request customer basket"))
 					{
 						
@@ -152,11 +163,9 @@ public void waitForRequest() {
 					else if(action.equals("Update Crop"))
 					{
 						 String email;
-						 os.writeObject(true);
 						 String cropName = (String)is.readObject();
 						 email = (String)is.readObject();
-						Crop crop = (Crop)is.readObject();
-						sql.updateCrops(crop, cropName,email);
+						sql.updateCrops(cropName,email);
 					}
 					else if(action.equals("Update Quantity"))
 					{

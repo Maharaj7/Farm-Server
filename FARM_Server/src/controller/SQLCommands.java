@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+
 import model.Basket;
 import model.Crop;
 import model.Customer;
@@ -19,7 +20,7 @@ public class SQLCommands {
 	 public SQLCommands(){
 		 connection = SqlConnection.dbConnector();
 	 }
-	 
+	 //private static org.apache.log4j.Logger logger = org.apache.log4j.LogManager.getLogger(SQLCommands.class);
 	 
 	 //adds
 	 public boolean addCustomer(Customer customer)
@@ -27,6 +28,8 @@ public class SQLCommands {
 		String query  = "insert into customer (fName,lName,email,password,image,fund) values (?,?,?,?,?,?)";
 		String query2 = "insert into login (email,password) values (?,?)";
 	    try{
+	    	//logger.debug(query);
+	    	//logger.debug(query2);
 		PreparedStatement pst = connection.prepareStatement(query);
 		PreparedStatement pst2 = connection.prepareStatement(query2);
 		pst.setString(1, customer.getfName());
@@ -40,11 +43,12 @@ public class SQLCommands {
 		pst2.setString(1, customer.getEmail());
 		pst2.setString(2, customer.getPassword());
 		pst2.execute();
-		
+		//logger.debug("Data inserted into customer table");
 		return true;
+		
 	    }
 	    catch(SQLException e){
-	    	e.printStackTrace();
+	    	//logger.error("Failed to insert data into customer table");
 	    }
 		 
 		 return false;
@@ -95,20 +99,10 @@ public class SQLCommands {
 		 return false;
 	 }
 	 
-	 public boolean updateCrops(Crop crop,String cropName,String email)
+	 public void updateCrops(String name,String email)
 	 {
-		 try{
-		 String query = "Update crop set email = '"+crop.getEmail()+"', image = '"+crop.getimagePath()+"', name = '"+crop.getName()+"', weight = '"+crop.getWeight()+"', cost = '"+crop.getCostPerUnit()+"', available = '"+crop.getAvailable()+"', quantity = '"+crop.getQuantity()+"' where name = '"+cropName+"' and email = '"+email+"'" ;
-		// PreparedStatement pst = connection.prepareStatement(query);
-		 java.sql.Statement  pst = connection.createStatement();
-			pst.execute(query);
-			return true;
-			}
-			catch(Exception e1)
-			{
-				JOptionPane.showMessageDialog(null, e1);
-			}
-		 return false;
+		 
+		 removeCrop(name, email);
 	 }
 	 
 	 public boolean addCrop(Crop crop)
@@ -346,7 +340,7 @@ public class SQLCommands {
 	 
 	 }
 	 
-/*	 public ArrayList<Basket> retrieveBasketData(ArrayList<Basket> basket,String email)
+	 public ArrayList<Basket> retrieveCustomerBasketData(ArrayList<Basket> basket,String email)
 	 {
 		 try{
 			 java.sql.Statement  pst = connection.createStatement();
@@ -365,7 +359,7 @@ public class SQLCommands {
 		 }
 		 return basket;
 	 
-	 }*/
+	 }
 	 
 	 public ArrayList<Basket> retrieveBasketData(ArrayList<Basket> basket)
 	 {
@@ -475,5 +469,17 @@ public class SQLCommands {
 	 
 	 }
 	 
+	 public void removeCrop(String name,String email)
+	 {
+		 try{
+			 String query = "Delete from crop where email = '"+email+"' and name = '"+name+"' ";
+			 PreparedStatement pst = connection.prepareStatement(query);
+				pst.execute();
+				}
+				catch(Exception e1)
+				{
+					JOptionPane.showMessageDialog(null, e1);
+				}
+	 }
 	 
 }
